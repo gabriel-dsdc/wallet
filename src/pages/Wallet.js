@@ -1,8 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { addWalletCurrencies } from '../actions';
 
 class Wallet extends React.Component {
+  fetchApi = () => (
+    fetch('https://economia.awesomeapi.com.br/json/all').then((res) => res.json()).catch((error) => error)
+  );
+
+  componentDidMount = async () => {
+    const { dispatch } = this.props;
+    const api = await this.fetchApi();
+    const [first, , ...rest] = Object.keys(api);
+    dispatch(addWalletCurrencies([first].concat(rest)));
+  }
+
   render() {
     const { user: { email } } = this.props;
     return (
@@ -16,6 +28,7 @@ class Wallet extends React.Component {
 }
 
 Wallet.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   user: PropTypes.shape({
     email: PropTypes.string,
   }).isRequired,
