@@ -15,22 +15,22 @@ class WalletForm extends React.Component {
 
   initialState = { ...this.state }
 
-  handleForm = ({ target }) => {
-    switch (target.id) {
+  handleForm = ({ target: { id, value } }) => {
+    switch (id) {
     case 'value-input':
-      this.setState({ value: target.value });
+      this.setState({ value });
       break;
     case 'description-input':
-      this.setState({ description: target.value });
+      this.setState({ description: value });
       break;
     case 'currency-input':
-      this.setState({ currency: target.value });
+      this.setState({ currency: value });
       break;
     case 'method-input':
-      this.setState({ method: target.value });
+      this.setState({ method: value });
       break;
     case 'tag-input':
-      this.setState({ tag: target.value });
+      this.setState({ tag: value });
       break;
     default:
       break;
@@ -126,8 +126,8 @@ WalletForm.propTypes = {
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  currencies: state.wallet.currencies,
+const mapStateToProps = ({ wallet: { currencies } }) => ({
+  currencies,
 });
 
 export default connect(mapStateToProps)(WalletForm);

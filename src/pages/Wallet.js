@@ -20,9 +20,11 @@ class Wallet extends React.Component {
   totalValue = () => {
     const { expenses } = this.props;
 
-    return expenses.reduce((acc, { value, exchangeRates, currency }) => (
-      acc + value * exchangeRates[currency].ask
-    ), 0).toFixed(2);
+    return expenses.reduce(
+      (acc, { value, currency, exchangeRates: { [currency]: { ask } } }) => (
+        acc + value * ask
+      ), 0,
+    );
   }
 
   render() {
@@ -36,7 +38,7 @@ class Wallet extends React.Component {
         </label>
         <label htmlFor="total-field">
           Despesa Total:
-          <p data-testid="total-field" id="total-field">{this.totalValue()}</p>
+          <p data-testid="total-field" id="total-field">{this.totalValue().toFixed(2)}</p>
         </label>
         <p data-testid="header-currency-field">BRL</p>
         <WalletForm />
