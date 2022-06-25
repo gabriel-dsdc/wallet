@@ -70,16 +70,6 @@ class WalletForm extends React.Component {
             onChange={ this.handleForm }
           />
         </label>
-        <label htmlFor="description-input">
-          Descrição
-          <input
-            data-testid="description-input"
-            id="description-input"
-            type="text"
-            value={ description }
-            onChange={ this.handleForm }
-          />
-        </label>
         <label htmlFor="currency-input">
           Moeda
           <select id="currency-input" value={ currency } onChange={ this.handleForm }>
@@ -115,6 +105,16 @@ class WalletForm extends React.Component {
             <option value="Transporte">Transporte</option>
             <option value="Saúde">Saúde</option>
           </select>
+        </label>
+        <label htmlFor="description-input">
+          Descrição
+          <input
+            data-testid="description-input"
+            id="description-input"
+            type="text"
+            value={ description }
+            onChange={ this.handleForm }
+          />
         </label>
         <button type="submit" onClick={ this.handleSubmit }>Adicionar despesa</button>
       </form>);

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addWalletCurrencies } from '../actions';
 import WalletForm from '../components/WalletForm';
+import WalletTable from '../components/WalletTable';
 
 class Wallet extends React.Component {
   fetchApi = () => (
@@ -39,6 +40,7 @@ class Wallet extends React.Component {
         </label>
         <p data-testid="header-currency-field">BRL</p>
         <WalletForm />
+        <WalletTable />
       </>);
   }
 }
