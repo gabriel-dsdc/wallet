@@ -16,13 +16,27 @@ class Wallet extends React.Component {
     dispatch(addWalletCurrencies([first].concat(rest)));
   }
 
+  totalValue = () => {
+    const { expenses } = this.props;
+
+    return expenses.reduce((acc, { value, exchangeRates, currency }) => (
+      acc + value * exchangeRates[currency].ask
+    ), 0).toFixed(2);
+  }
+
   render() {
     const { email } = this.props;
     return (
       <>
         <h1>TrybeWallet</h1>
-        <p data-testid="email-field">{email}</p>
-        <p data-testid="total-field">{0}</p>
+        <label htmlFor="email-field">
+          Email:&nbsp;
+          <p data-testid="email-field" id="email-field">{email}</p>
+        </label>
+        <label htmlFor="total-field">
+          Despesa Total:
+          <p data-testid="total-field" id="total-field">{this.totalValue()}</p>
+        </label>
         <p data-testid="header-currency-field">BRL</p>
         <WalletForm />
       </>);
@@ -32,10 +46,12 @@ class Wallet extends React.Component {
 Wallet.propTypes = {
   dispatch: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  email: state.user.email,
+const mapStateToProps = ({ user: { email }, wallet: { expenses } }) => ({
+  email,
+  expenses,
 });
 
 export default connect(mapStateToProps)(Wallet);
