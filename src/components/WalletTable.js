@@ -1,8 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { deleteExpense } from '../actions';
 
 class WalletTable extends React.Component {
+  handleDelete = ({ target: { id } }) => {
+    const { dispatch } = this.props;
+    dispatch(deleteExpense(Number(id.split('--')[1])));
+  }
+
   render() {
     const { expenses } = this.props;
     return (
@@ -35,7 +41,16 @@ class WalletTable extends React.Component {
                 <td>{Number(ask).toFixed(2)}</td>
                 <td>{Number(value * ask).toFixed(2)}</td>
                 <td>Real</td>
-                <td />
+                <td>
+                  <button
+                    data-testid="delete-btn"
+                    type="button"
+                    id={ `delete-btn--${id}` }
+                    onClick={ this.handleDelete }
+                  >
+                    Excluir
+                  </button>
+                </td>
               </tr>
             ),
           )}
@@ -45,6 +60,7 @@ class WalletTable extends React.Component {
 }
 
 WalletTable.propTypes = {
+  dispatch: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
