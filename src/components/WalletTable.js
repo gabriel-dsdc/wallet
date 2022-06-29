@@ -1,9 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteExpense } from '../actions';
+import { deleteExpense, toggleEditing } from '../actions';
 
 class WalletTable extends React.Component {
+  handleEdit = async ({ target: { id } }) => {
+    const { currentValue, dispatch } = this.props;
+
+    await dispatch(toggleEditing({
+      editor: true,
+      idToEdit: Number(id.split('--')[1]),
+    }));
+
+    currentValue();
+  }
+
   handleDelete = ({ target: { id } }) => {
     const { dispatch } = this.props;
     dispatch(deleteExpense(Number(id.split('--')[1])));
@@ -43,6 +54,14 @@ class WalletTable extends React.Component {
                 <td>Real</td>
                 <td>
                   <button
+                    data-testid="edit-btn"
+                    type="button"
+                    id={ `edit-btn--${id}` }
+                    onClick={ this.handleEdit }
+                  >
+                    Editar
+                  </button>
+                  <button
                     data-testid="delete-btn"
                     type="button"
                     id={ `delete-btn--${id}` }
@@ -62,6 +81,7 @@ class WalletTable extends React.Component {
 WalletTable.propTypes = {
   dispatch: PropTypes.func.isRequired,
   expenses: PropTypes.arrayOf(PropTypes.object).isRequired,
+  currentValue: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ wallet: { expenses } }) => ({

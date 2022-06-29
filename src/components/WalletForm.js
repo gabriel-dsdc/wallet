@@ -1,62 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addExpense } from '../actions';
+import { editExpense, toggleEditing } from '../actions';
 
 class WalletForm extends React.Component {
-  state = {
-    value: '',
-    currency: 'USD',
-    method: 'Dinheiro',
-    tag: 'Alimentação',
-    description: '',
-    exchangeRates: {},
-  }
-
-  initialState = { ...this.state }
-
-  handleForm = ({ target: { id, value } }) => {
-    switch (id) {
-    case 'value-input':
-      this.setState({ value });
-      break;
-    case 'description-input':
-      this.setState({ description: value });
-      break;
-    case 'currency-input':
-      this.setState({ currency: value });
-      break;
-    case 'method-input':
-      this.setState({ method: value });
-      break;
-    case 'tag-input':
-      this.setState({ tag: value });
-      break;
-    default:
-      break;
-    }
-  }
-
-  fetchAPI = () => (
-    fetch('https://economia.awesomeapi.com.br/json/all').then((res) => res.json()).catch((error) => (error))
-  )
-
-  handleSubmit = async (event) => {
+  handleEdit = (event) => {
     event.preventDefault();
-    const { dispatch } = this.props;
-    const api = await this.fetchAPI();
+    const { dispatch, idToEdit, inputValues, setToInitialState } = this.props;
 
-    dispatch(addExpense({
-      ...this.state,
-      exchangeRates: api,
+    dispatch(editExpense(idToEdit, {
+      ...inputValues,
     }));
 
-    this.setState(this.initialState);
+    dispatch(toggleEditing({
+      editor: false,
+    }));
+
+    setToInitialState();
   }
 
   render() {
-    const { value, currency, method, tag, description } = this.state;
-    const { currencies } = this.props;
+    const { currencies, editor, handleForm, handleSubmit,
+      inputValues: { value, currency, method, tag, description } } = this.props;
 
     return (
       <form>
@@ -65,14 +30,20 @@ class WalletForm extends React.Component {
           <input
             data-testid="value-input"
             id="value-input"
+            name="value"
             type="number"
             value={ value }
-            onChange={ this.handleForm }
+            onChange={ handleForm }
           />
         </label>
         <label htmlFor="currency-input">
           Moeda
-          <select id="currency-input" value={ currency } onChange={ this.handleForm }>
+          <select
+            id="currency-input"
+            name="currency"
+            value={ currency }
+            onChange={ handleForm }
+          >
             {currencies.map((currencyName) => (
               <option key={ currencyName } value={ currencyName }>{currencyName}</option>
             ))}
@@ -83,8 +54,9 @@ class WalletForm extends React.Component {
           <select
             data-testid="method-input"
             id="method-input"
+            name="method"
             value={ method }
-            onChange={ this.handleForm }
+            onChange={ handleForm }
           >
             <option value="Dinheiro">Dinheiro</option>
             <option value="Cartão de crédito">Cartão de crédito</option>
@@ -96,8 +68,9 @@ class WalletForm extends React.Component {
           <select
             data-testid="tag-input"
             id="tag-input"
+            name="tag"
             value={ tag }
-            onChange={ this.handleForm }
+            onChange={ handleForm }
           >
             <option value="Alimentação">Alimentação</option>
             <option value="Lazer">Lazer</option>
@@ -111,12 +84,17 @@ class WalletForm extends React.Component {
           <input
             data-testid="description-input"
             id="description-input"
+            name="description"
             type="text"
             value={ description }
-            onChange={ this.handleForm }
+            onChange={ handleForm }
           />
         </label>
-        <button type="submit" onClick={ this.handleSubmit }>Adicionar despesa</button>
+        {editor ? (
+          <button type="submit" onClick={ this.handleEdit }>Editar despesa</button>
+        ) : (
+          <button type="submit" onClick={ handleSubmit }>Adicionar despesa</button>
+        )}
       </form>);
   }
 }
@@ -124,10 +102,21 @@ class WalletForm extends React.Component {
 WalletForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  editor: PropTypes.bool.isRequired,
+  idToEdit: PropTypes.number.isRequired,
+  handleForm: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  inputValues: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.object,
+  ]).isRequired,
+  setToInitialState: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({ wallet: { currencies } }) => ({
+const mapStateToProps = ({ wallet: { currencies, editor, idToEdit } }) => ({
   currencies,
+  editor,
+  idToEdit,
 });
 
 export default connect(mapStateToProps)(WalletForm);

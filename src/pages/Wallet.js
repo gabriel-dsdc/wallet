@@ -1,20 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addWalletCurrencies } from '../actions';
-import WalletForm from '../components/WalletForm';
-import WalletTable from '../components/WalletTable';
+import { fetchCurrenciesNamesThunk } from '../actions';
+import WalletExpenses from '../components/WalletExpenses';
 
 class Wallet extends React.Component {
-  fetchApi = () => (
-    fetch('https://economia.awesomeapi.com.br/json/all').then((res) => res.json()).catch((error) => error)
-  );
-
-  componentDidMount = async () => {
+  componentDidMount = () => {
     const { dispatch } = this.props;
-    const api = await this.fetchApi();
-    const [first, , ...rest] = Object.keys(api);
-    dispatch(addWalletCurrencies([first].concat(rest)));
+    dispatch(fetchCurrenciesNamesThunk());
   }
 
   totalValue = () => {
@@ -41,8 +34,7 @@ class Wallet extends React.Component {
           <p data-testid="total-field" id="total-field">{this.totalValue().toFixed(2)}</p>
         </label>
         <p data-testid="header-currency-field">BRL</p>
-        <WalletForm />
-        <WalletTable />
+        <WalletExpenses />
       </>);
   }
 }
