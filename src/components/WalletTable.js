@@ -23,7 +23,7 @@ class WalletTable extends React.Component {
   render() {
     const { expenses } = this.props;
     return (
-      <table>
+      <table className="wallet-table">
         <thead>
           <tr>
             <th>Descrição</th>
@@ -52,7 +52,7 @@ class WalletTable extends React.Component {
                 <td>{Number(ask).toFixed(2)}</td>
                 <td>{Number(value * ask).toFixed(2)}</td>
                 <td>Real</td>
-                <td>
+                <td className="table-buttons">
                   <button
                     data-testid="edit-btn"
                     type="button"

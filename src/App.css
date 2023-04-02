@@ -1,41 +1,194 @@
-.App {
+/* stylelint-disable selector-max-specificity */
+
+/* stylelint-disable no-descending-specificity */
+:root {
+
+  --success-color: #28a745;
+
+  --success-color__hover: #218838;
+}
+
+#root {
+  height: 100vh;
+}
+
+/* Login */
+.login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  justify-content: center;
+}
+
+.login div {
+  margin: 5px 0;
+  position: relative;
+}
+
+.login label {
+  align-items: center;
+  background-color: var(--success-color);
+  border-radius: 5px 0 0 5px;
+  bottom: 0;
+  color: white;
+  display: inline-flex;
+  font-weight: 700;
+  padding: 0 15px 0 5px;
+  position: absolute;
+  top: 0;
+  width: 60px;
+}
+
+.login label:hover {
+  background-color: var(--success-color__hover);
+}
+
+.login input {
+  border-radius: 5px;
+  outline: 0;
+  padding: 10px 0 10px 15px;
+  text-indent: 70px;
+  width: 200px;
+}
+
+.login button {
+  background-color: var(--success-color);
+  border: 0;
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+  padding: 10px 15px;
+}
+
+.login button:hover {
+  background-color: var(--success-color__hover);
+}
+
+.login button:disabled {
+  background-color: gray;
+}
+
+/* Wallet */
+.wallet {
+  color: white;
+  font-weight: 700;
+}
+
+.wallet header {
+  align-items: center;
+  background-color: #383838;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wallet h2 {
+  margin: 0;
+  margin-left: 20px;
+}
+
+.wallet div {
+  display: flex;
+}
+
+.wallet header label {
+  align-items: center;
+  display: flex;
+  margin-right: 20px;
+}
+
+/* Wallet Form */
+.wallet-form {
+  background-color: #222;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.wallet-form input {
+  border-radius: 5px;
+  margin-left: 5px;
+  padding: 10px;
+}
+
+.wallet-form select {
+  border-radius: 5px;
+  margin-left: 5px;
+  padding: 10px;
+}
+
+.wallet-form button {
+  background-color: var(--success-color);
+  border-radius: 5px;
+  color: white;
+  font-weight: 700;
+}
+
+.wallet-form button:hover {
+  background-color: var(--success-color__hover);
+}
+
+/* Wallet Table */
+.wallet-table {
+  border-collapse: collapse;
+  height: 100%;
+  width: 100%;
+}
+
+.wallet-table th {
+  background-color: black;
+  padding: 10px;
+}
+
+.wallet-table td:not( .table-buttons ) {
+  border: solid white;
+  border-width: 0 1px 0 0;
+  padding: 10px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.wallet-table tbody tr:nth-child( 4n+1 ) {
+  background-color: #3d96c8;
 }
 
-@media ( prefers-reduced-motion : no-preference ) {
-
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.wallet-table tbody tr:nth-child( 4n+2 ) {
+  background-color: #f1b100;
 }
 
-.App-header {
-  align-items: center;
-  background-color: #282c34;
+.wallet-table tbody tr:nth-child( 4n+3 ) {
+  background-color: #51bd3d;
+}
+
+.wallet-table tbody tr:nth-child( 4n+4 ) {
+  background-color: #f16d60;
+}
+
+.table-buttons {
+  background-color: black;
+  text-align: center;
+}
+
+.table-buttons button {
+  border-radius: 5px;
   color: white;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  justify-content: center;
-  min-height: 100vh;
+  font-weight: 700;
+  height: 90%;
+  width: 45%;
 }
 
-.App-link {
-  color: #61dafb;
+.wallet-table td button:nth-child( 1 ) {
+  background-color: #007bff;
+  margin-right: 5px;
 }
 
-@keyframes App-logo-spin {
+.wallet-table td button:nth-child( 1 ):hover {
+  background-color: #0062cc;
+}
 
-  from {
-    transform: rotate(0deg);
-  }
+.wallet-table td button:nth-child( 2 ) {
+  background-color: #dc3545;
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+.wallet-table td button:nth-child( 2 ):hover {
+  background-color: #bd2130;
 }

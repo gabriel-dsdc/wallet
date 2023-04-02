@@ -1,7 +1,9 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { sendUserEmail } from '../actions';
+import '../App.css';
 
 class Login extends React.Component {
   state = {
@@ -41,9 +43,12 @@ class Login extends React.Component {
   render() {
     const { email, password, isSubmitDisabled } = this.state;
     return (
-      <form>
-        <label htmlFor="email">
-          Email
+      <form className="login">
+        <h1>Wallet</h1>
+        <div>
+          <label htmlFor="email">
+            Email
+          </label>
           <input
             data-testid="email-input"
             id="email"
@@ -52,9 +57,11 @@ class Login extends React.Component {
             placeholder="email@example.com"
             onChange={ this.handleEmail }
           />
-        </label>
-        <label htmlFor="password">
-          Password
+        </div>
+        <div>
+          <label htmlFor="password">
+            Password
+          </label>
           <input
             data-testid="password-input"
             id="password"
@@ -63,13 +70,13 @@ class Login extends React.Component {
             placeholder="mySecurePassword"
             onChange={ this.handlePassword }
           />
-        </label>
+        </div>
         <button
           type="submit"
           disabled={ isSubmitDisabled }
           onClick={ this.handleSubmit }
         >
-          Entrar
+          Enter
         </button>
       </form>);
   }

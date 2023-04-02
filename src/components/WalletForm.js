@@ -24,9 +24,9 @@ class WalletForm extends React.Component {
       inputValues: { value, currency, method, tag, description } } = this.props;
 
     return (
-      <form>
+      <form className="wallet-form">
         <label htmlFor="value-input">
-          Valor
+          Valor:
           <input
             data-testid="value-input"
             id="value-input"
@@ -34,10 +34,11 @@ class WalletForm extends React.Component {
             type="number"
             value={ value }
             onChange={ handleForm }
+            placeholder="0"
           />
         </label>
         <label htmlFor="currency-input">
-          Moeda
+          Moeda:
           <select
             id="currency-input"
             name="currency"
@@ -50,7 +51,7 @@ class WalletForm extends React.Component {
           </select>
         </label>
         <label htmlFor="method-input">
-          Método de pagamento
+          Método de pagamento:
           <select
             data-testid="method-input"
             id="method-input"
@@ -64,7 +65,7 @@ class WalletForm extends React.Component {
           </select>
         </label>
         <label htmlFor="tag-input">
-          Categoria
+          Categoria:
           <select
             data-testid="tag-input"
             id="tag-input"
@@ -80,7 +81,7 @@ class WalletForm extends React.Component {
           </select>
         </label>
         <label htmlFor="description-input">
-          Descrição
+          Descrição:
           <input
             data-testid="description-input"
             id="description-input"
@@ -88,6 +89,7 @@ class WalletForm extends React.Component {
             type="text"
             value={ description }
             onChange={ handleForm }
+            placeholder="Almoço"
           />
         </label>
         {editor ? (

@@ -23,19 +23,28 @@ class Wallet extends React.Component {
   render() {
     const { email } = this.props;
     return (
-      <>
-        <h1>TrybeWallet</h1>
-        <label htmlFor="email-field">
-          Email:&nbsp;
-          <p data-testid="email-field" id="email-field">{email}</p>
-        </label>
-        <label htmlFor="total-field">
-          Despesa Total:
-          <p data-testid="total-field" id="total-field">{this.totalValue().toFixed(2)}</p>
-        </label>
-        <p data-testid="header-currency-field">BRL</p>
+      <main className="wallet">
+        <header>
+          <h2>Wallet</h2>
+          <div>
+            <label htmlFor="email-field">
+              Email:&nbsp;
+              <p data-testid="email-field" id="email-field">{email}</p>
+            </label>
+            <label htmlFor="total-field">
+              Despesa Total:&nbsp;
+              <p
+                data-testid="total-field"
+                id="total-field"
+              >
+                {this.totalValue().toFixed(2)}
+              </p>
+              <p data-testid="header-currency-field">BRL</p>
+            </label>
+          </div>
+        </header>
         <WalletExpenses />
-      </>);
+      </main>);
   }
 }
 
